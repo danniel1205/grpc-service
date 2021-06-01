@@ -3,14 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/danniel1205/grpc-service/helloservice"
-	"github.com/danniel1205/grpc-service/server"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"os"
 	"os/signal"
+
+	"github.com/danniel1205/grpc-service/helloservice"
+	"github.com/danniel1205/grpc-service/server"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 var (
@@ -23,7 +24,7 @@ var (
 func main() {
 	fmt.Println("Starting Server...")
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
+	lis, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%d", *port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -49,7 +50,7 @@ func main() {
 	reflection.Register(grpcServer)
 
 	go func() {
-		fmt.Println(fmt.Sprintf("Server running on localhost:%v", *port))
+		fmt.Println(fmt.Sprintf("Server running on 0.0.0.0:%v", *port))
 		if err := grpcServer.Serve(lis); err != nil {
 			log.Fatalf("failed to serve: %v", err)
 		}

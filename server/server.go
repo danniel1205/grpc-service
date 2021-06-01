@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+
 	"github.com/danniel1205/grpc-service/helloservice"
 )
 
@@ -15,7 +16,7 @@ func NewServer() *grpcServer {
 }
 
 func (s *grpcServer) SayHello(ctx context.Context, req *helloservice.Request) (*helloservice.Response, error) {
-	fmt.Println(fmt.Sprintf("SayHello() is invoked with user %s who is from %s", req.GetName(), req.GetFrom()))
+	fmt.Println(fmt.Sprintf("SayHello() is invoked by user %s who is from %s", req.GetName(), req.GetFrom()))
 
 	name := req.GetName()
 	from := req.GetFrom()
