@@ -15,7 +15,7 @@ func NewServer() *grpcServer {
 }
 
 func (s *grpcServer) SayHello(ctx context.Context, req *helloservice.Request) (*helloservice.Response, error) {
-	fmt.Printf("SayHello is invoked with user %s who is from %s", req.GetName(), req.GetFrom())
+	fmt.Println(fmt.Sprintf("SayHello() is invoked with user %s who is from %s", req.GetName(), req.GetFrom()))
 
 	name := req.GetName()
 	from := req.GetFrom()

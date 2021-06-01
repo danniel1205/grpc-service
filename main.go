@@ -49,7 +49,7 @@ func main() {
 	reflection.Register(grpcServer)
 
 	go func() {
-		fmt.Printf("Server running on localhost:%v", *port)
+		fmt.Println(fmt.Sprintf("Server running on localhost:%v", *port))
 		if err := grpcServer.Serve(lis); err != nil {
 			log.Fatalf("failed to serve: %v", err)
 		}
