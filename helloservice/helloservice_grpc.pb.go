@@ -14,86 +14,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// HelloWorldClient is the client API for HelloWorld service.
+// HelloServiceClient is the client API for HelloService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type HelloWorldClient interface {
+type HelloServiceClient interface {
 	SayHello(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
-type helloWorldClient struct {
+type helloServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHelloWorldClient(cc grpc.ClientConnInterface) HelloWorldClient {
-	return &helloWorldClient{cc}
+func NewHelloServiceClient(cc grpc.ClientConnInterface) HelloServiceClient {
+	return &helloServiceClient{cc}
 }
 
-func (c *helloWorldClient) SayHello(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *helloServiceClient) SayHello(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/helloservice.HelloWorld/SayHello", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/helloservice.HelloService/SayHello", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// HelloWorldServer is the server API for HelloWorld service.
-// All implementations must embed UnimplementedHelloWorldServer
+// HelloServiceServer is the server API for HelloService service.
+// All implementations must embed UnimplementedHelloServiceServer
 // for forward compatibility
-type HelloWorldServer interface {
+type HelloServiceServer interface {
 	SayHello(context.Context, *Request) (*Response, error)
-	mustEmbedUnimplementedHelloWorldServer()
+	mustEmbedUnimplementedHelloServiceServer()
 }
 
-// UnimplementedHelloWorldServer must be embedded to have forward compatible implementations.
-type UnimplementedHelloWorldServer struct {
+// UnimplementedHelloServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedHelloServiceServer struct {
 }
 
-func (UnimplementedHelloWorldServer) SayHello(context.Context, *Request) (*Response, error) {
+func (UnimplementedHelloServiceServer) SayHello(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
 }
-func (UnimplementedHelloWorldServer) mustEmbedUnimplementedHelloWorldServer() {}
+func (UnimplementedHelloServiceServer) mustEmbedUnimplementedHelloServiceServer() {}
 
-// UnsafeHelloWorldServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to HelloWorldServer will
+// UnsafeHelloServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to HelloServiceServer will
 // result in compilation errors.
-type UnsafeHelloWorldServer interface {
-	mustEmbedUnimplementedHelloWorldServer()
+type UnsafeHelloServiceServer interface {
+	mustEmbedUnimplementedHelloServiceServer()
 }
 
-func RegisterHelloWorldServer(s grpc.ServiceRegistrar, srv HelloWorldServer) {
-	s.RegisterService(&HelloWorld_ServiceDesc, srv)
+func RegisterHelloServiceServer(s grpc.ServiceRegistrar, srv HelloServiceServer) {
+	s.RegisterService(&HelloService_ServiceDesc, srv)
 }
 
-func _HelloWorld_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _HelloService_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HelloWorldServer).SayHello(ctx, in)
+		return srv.(HelloServiceServer).SayHello(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/helloservice.HelloWorld/SayHello",
+		FullMethod: "/helloservice.HelloService/SayHello",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloWorldServer).SayHello(ctx, req.(*Request))
+		return srv.(HelloServiceServer).SayHello(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// HelloWorld_ServiceDesc is the grpc.ServiceDesc for HelloWorld service.
+// HelloService_ServiceDesc is the grpc.ServiceDesc for HelloService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var HelloWorld_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "helloservice.HelloWorld",
-	HandlerType: (*HelloWorldServer)(nil),
+var HelloService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "helloservice.HelloService",
+	HandlerType: (*HelloServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "SayHello",
-			Handler:    _HelloWorld_SayHello_Handler,
+			Handler:    _HelloService_SayHello_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

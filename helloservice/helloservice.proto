@@ -4,7 +4,7 @@ package helloservice;
 
 option go_package="github.com/danniel1205/grpc-service/helloservice";
 
-service HelloWorld {
+service HelloService {
   rpc SayHello(Request) returns (Response) {};
 }
 
